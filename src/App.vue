@@ -1,16 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div id="app">
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+    <button @click="fetchData">Fetch Data from Backend</button>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent, ref } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
-  components: {
-    HelloWorld,
+  setup() {
+    const title = ref("Flask + Vue TypeScript App");
+    const message = ref(
+      "Welcome to your Flask-powered Vue.js application with TypeScript!"
+    );
+
+    const fetchData = async (): Promise<void> => {
+      try {
+        const response = await axios.get<{ message: string }>(
+          "http://localhost:5000/api/data"
+        );
+        message.value = response.data.message;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        message.value = "Error fetching data from the backend";
+      }
+    };
+
+    return {
+      title,
+      message,
+      fetchData,
+    };
   },
 });
 </script>

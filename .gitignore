@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# venv
+get-in-the-pool/*
+
 
 # local env files
 .env.local
