@@ -13,7 +13,7 @@ import axios from "axios";
 export default defineComponent({
   name: "App",
   setup() {
-    const title = ref("Flask + Vue TypeScript App");
+    const title = ref("GET IN THE POOL!");
     const message = ref(
       "Welcome to your Flask-powered Vue.js application with TypeScript!"
     );
