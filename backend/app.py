@@ -6,7 +6,7 @@ CORS(app)  # This will enable CORS for all routes
 
 @app.route('/api/data')
 def get_data():
-    return jsonify({"message": "Hello from our new Flask backend!"})
+    return jsonify({"message": "Hello from our new new Flask backend!"})
 
 if __name__ == '__main__':
     app.run(debug=True)
