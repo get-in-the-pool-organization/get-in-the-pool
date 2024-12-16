@@ -5,28 +5,24 @@ on:
     paths:
       - 'backend/**'  # Trigger when anything in /backend changes
     branches:
-      - main          # Only deploy from the main branch
+      - main  # Only deploy from the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-        known_hosts: ${{ secrets.LIGHTSAIL_IP }}
-
-    - name: Deploy Backend to Lightsail
-      run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.LIGHTSAIL_IP }} <<EOF
-          cd /home/ubuntu/myapp/backend
-          git pull origin main
-          source venv/bin/activate
-          pip install -r requirements.txt
-          sudo systemctl restart myapp  # Restarts the Gunicorn service
-        EOF
+      - name: Deploy to Lightsail
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.LIGHTSAIL_IP }}
+          username: ubuntu
+          key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/myapp/backend
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart myapp
