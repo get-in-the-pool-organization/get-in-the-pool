@@ -20,7 +20,9 @@ export default defineComponent({
 
     const fetchData = async (): Promise<void> => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/data");
+        const response = await axios.get(
+          `${process.env.VUE_APP_APP_URL}/api/data`
+        );
         message.value = response.data.message;
       } catch (error) {
         console.error("Error fetching data:", error);
