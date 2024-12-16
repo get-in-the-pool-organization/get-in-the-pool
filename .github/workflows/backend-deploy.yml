@@ -21,8 +21,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
           script: |
-            cd /home/ubuntu/myapp/backend
+            cd /home/ubuntu/get-in-the-pool
             git pull origin main
             source venv/bin/activate
             pip install -r requirements.txt
-            sudo systemctl restart myapp
+            sudo systemctl restart get-in-the-pool
