@@ -3,9 +3,10 @@ name: Deploy Backend to Lightsail
 on:
   push:
     paths:
-      - 'backend/**'  # Trigger when anything in /backend changes
+      - 'backend/**'
+      - 'requirements.txt'
     branches:
-      - main  # Only deploy from the main branch
+      - main
 
 jobs:
   deploy:
@@ -23,6 +24,11 @@ jobs:
           script: |
             cd /home/ubuntu/get-in-the-pool
             git pull origin main
-            source venv/bin/activate
+            # Create venv if it doesn't exist
+            python3 -m venv backend/venv || true
+            source backend/venv/bin/activate
             pip install -r requirements.txt
+            sudo cp backend/server-config/get-in-the-pool.service /etc/systemd/system/
+            sudo systemctl daemon-reload
+            sudo systemctl enable get-in-the-pool
             sudo systemctl restart get-in-the-pool
