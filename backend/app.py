@@ -7,7 +7,7 @@ CORS(app)
 
 @app.route('/api/data')
 def get_data():
-    print("hewwo world")
+    print("hello world")
     return jsonify({"message": "Test from Peter from our new new Flask backend!"})
 
 if __name__ == '__main__':
