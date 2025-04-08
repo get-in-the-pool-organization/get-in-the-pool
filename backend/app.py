@@ -3,7 +3,7 @@ from flask_cors import CORS
 from config import Config
 
 app = Flask(__name__)
-CORS(app)  # This will enable CORS for all routes
+CORS(app, origins=["https://poolio.biz"])
 
 @app.route('/api/data')
 def get_data():
